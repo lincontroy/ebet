@@ -17,9 +17,19 @@ class MemberController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
         //
+
+        $q = Member::query();
+        //loop through the request and add the where clauses
+        foreach ($request->all() as $key => $value) {
+            if($value)
+                $q->where($key, 'like', '%' . $value . '%');
+        }
+        $members = $q->paginate(20);
+
+        return view('members.show', compact('members'));
         
     }
 

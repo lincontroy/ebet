@@ -1,9 +1,9 @@
 @extends('layouts.dashboard')
-@section('title', 'Create Channel')
+@section('title', 'Create Transaction')
 @section('content')
 <div class="card card-primary card-outline">
     <div class="card-header">
-        <h5 class="card-title">Create Channel</h5>
+        <h5 class="card-title">Create Transaction</h5>
     </div>
     <!-- /.card-header -->
     <div class="card-body">

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\District;
+use App\Models\Member;
 use Illuminate\Http\Request;
 
 class DistrictController extends Controller
@@ -44,7 +45,12 @@ class DistrictController extends Controller
      */
     public function show(District $district)
     {
-        //
+        // dd($district->id);
+        //get the district members
+
+        $districtMembers=Member::where('district_id',$district->id)->paginate(20);
+
+        return view('districts.show',compact('districtMembers','district'));
     }
 
     /**

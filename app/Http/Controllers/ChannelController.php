@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Channel;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class ChannelController extends Controller
@@ -48,6 +49,11 @@ class ChannelController extends Controller
     public function show(Channel $channel)
     {
         //
+
+        $q="%#$channel->channel_name";
+        $transactions=Transaction::where('BillRefNumber', 'LIKE', $q)->paginate(10);
+
+        return view('channels.show',compact('channel','transactions'));
     }
 
     /**

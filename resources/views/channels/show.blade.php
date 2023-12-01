@@ -1,7 +1,24 @@
 @extends('layouts.dashboard')
-@section('title', 'Member')
+@section('title', 'Channel')
 
 @section('content')
+
+
+<div class="row">
+        <div class="col-lg-12">
+
+            <div class="card card-primary card-outline">
+                <div class="card-header">
+
+                 <div><b>Name: </b> {{$channel->channel_name}}</div><br>
+                 <div><b>Created At: </b> {{$channel->created_at}}</div><br>
+                
+
+</div>
+</div>
+</div>
+</div>
+
 
 
     <div class="row">
@@ -9,7 +26,7 @@
 
             <div class="card card-primary card-outline">
                 <div class="card-header">
-                    <h5 class="card-title m-0">Member</h5>
+                    <h5 class="card-title m-0">Channel contributions</h5>
                     
                 </div>
                 <div class="card-body">
@@ -17,9 +34,10 @@
                         <thead>
                             <tr>
                                
+                                <th>TransactionType</th>
                                 <th>TransID</th>
-                                <th>Amount</th>
-                                <th>Account</th>
+                                <th>TransAmount</th>
+                                <th>MSISDN</th>
                                 <th>Created at</th>
                                
                             </tr>
@@ -28,21 +46,10 @@
                             @foreach ($transactions as $key=>$transaction)
                                 <tr>
                                    
+                                    <td>{{ $transaction->TransactionType }}</td>
                                     <td>{{ $transaction->TransID }}</td>
                                     <td>{{ $transaction->TransAmount }}</td>
-                                    <td>
-                                    <?php
-                                    $billRefNumber = $transaction->BillRefNumber;
-
-                                    // Explode the string based on the '#' character
-                                    $parts = explode('#', $billRefNumber);
-                                    
-                                    // Get the second part of the exploded array
-                                    $stringAfterHash = isset($parts[1]) ? $parts[1] : null;
-                                    
-                                    echo $stringAfterHash;
-                                    ?>
-                                    </td>
+                                    <td>{{ $transaction->MSISDN }}</td>
                                     <td>{{ $transaction->created_at }}</td>
                                   
                                   
@@ -50,7 +57,7 @@
                             @endforeach
                             @if (count($transactions) == 0)
                                 <tr>
-                                    <td colspan="6">No Contribution found</td>
+                                    <td colspan="6">No Transactions found for this channel</td>
                                 </tr>
                             @endif
                         </tbody>

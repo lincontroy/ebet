@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Member;
+use App\Models\Transaction;
 
 class HomeController extends Controller
 {
@@ -26,13 +27,22 @@ class HomeController extends Controller
     {
         $q = Member::query();
         //loop through the request and add the where clauses
-        foreach ($request->all() as $key => $value) {
+        foreach ($request->except(['page', 'per_page']) as $key => $value) {
             if($value)
                 $q->where($key, 'like', '%' . $value . '%');
         }
         $members = $q->paginate(20);
+
+        $q = Transaction::query();
+        //loop through the request and add the where clauses
+        foreach ($request->except(['page', 'per_page']) as $key => $value) {
+            if ($value) {
+                $q->where($key, 'like', '%' . $value . '%');
+            }
+        }
+        $transactions = $q->paginate(10);
         
 
-        return view('home', compact('members'));
+        return view('home', compact('members','transactions'));
     }
 }
