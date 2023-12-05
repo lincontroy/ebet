@@ -50,10 +50,11 @@
                                 <th>TransactionType</th>
                                 <th>TransID</th>
                                 <th>TransAmount</th>
-                                <th>BillRefNumber</th>
-                                <th>MSISDN</th>
+                                <th>Member</th>
+                                <th>Channel</th>
+                                <th>Phone</th>
                                 <th>FirstName</th>
-                                <th>created_at</th>
+                                <th>created at</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,7 +63,23 @@
                                     <td>{{ $transaction->TransactionType }}</td>
                                     <td>{{ $transaction->TransID }}</td>
                                     <td>{{ $transaction->TransAmount }}</td>
-                                    <td>{{ $transaction->BillRefNumber }}</td>
+                                    <td><?php
+
+                                    $part1;
+                                    
+                                
+                                     $parts = explode('#', $transaction->BillRefNumber);
+                                     if (count($parts) == 2) {
+                                         $part1=$parts[0]; // This will output '4'
+                                         $part2= $parts[1]; // This will output 'offering'
+                                         echo $part1;
+                                     } else {
+                                         // Handle the case where the string doesn't contain exactly one '#'
+                                         echo $transaction->BillRefNumber; // Output the original string
+                                     }
+                            
+                                    ?></td>
+                                    <td>{{$part2}}</td>
                                     <td>{{ $transaction->MSISDN }}</td>
                                     <td>{{ $transaction->FirstName }}</td>
                                     <td>{{ $transaction->created_at }}</td>
