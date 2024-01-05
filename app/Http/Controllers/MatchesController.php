@@ -29,6 +29,18 @@ class MatchesController extends Controller
         return view('matches.create');
     }
 
+    public function getMatches(Request $request){
+
+        $type=$request->type;
+
+        $all=Matches::where('type',$type)
+        ->whereDate('created_at',\Carbon\Carbon::today())
+        ->get();
+
+        return response()->json($all);
+
+    }
+
     /**
      * Store a newly created resource in storage.
      */

@@ -53,7 +53,7 @@
             <!-- small card -->
             <div class="small-box bg-danger">
                 <div class="inner">
-                    <h3>{{\App\Models\Matches::where('created_at',Carbon\Carbon::today())->count()}}</h3>
+                    <h3>{{\App\Models\Matches::whereDate('created_at',Carbon\Carbon::today())->count()}}</h3>
 
                     <p>Matches today</p>
                 </div>

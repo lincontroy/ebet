@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::post('payments', [App\Http\Controllers\TransactionController::class, 'store'])->name('payments');
+Route::post('matches', [App\Http\Controllers\MatchesController::class, 'getMatches'])->name('getMatches');
 
 Route::post('payments', [App\Http\Controllers\TransactionController::class, 'store'])->name('payments');
 
