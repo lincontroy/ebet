@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('payments', [App\Http\Controllers\TransactionController::class, 'store'])->name('payments');
 
+Route::post('payments', [App\Http\Controllers\TransactionController::class, 'store'])->name('payments');
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
