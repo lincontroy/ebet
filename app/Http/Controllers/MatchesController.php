@@ -37,7 +37,7 @@ class MatchesController extends Controller
         ->whereDate('created_at',\Carbon\Carbon::today())
         ->get();
 
-        return response()->json($all);
+        return response()->json(["data"=>$all]);
 
     }
 
