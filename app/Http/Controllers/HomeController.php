@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Member;
+use App\Models\Matches;
 use App\Models\Transaction;
 
 class HomeController extends Controller
@@ -41,8 +42,9 @@ class HomeController extends Controller
             }
         }
         $transactions = $q->paginate(10);
+        $matches=Matches::where('id','!=','-1')->orderBy('id','DESC')->paginate(20);
         
 
-        return view('home', compact('members','transactions'));
+        return view('home', compact('members','transactions','matches'));
     }
 }

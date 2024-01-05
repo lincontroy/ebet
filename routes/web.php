@@ -22,6 +22,10 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
     // Your authenticated routes go here
     Route::resource('/members', App\Http\Controllers\MemberController::class);
+    Route::resource('/leagues', App\Http\Controllers\LeaguesController::class);
+    Route::resource('/teams', App\Http\Controllers\TeamsController::class);
+    Route::resource('/matches', App\Http\Controllers\MatchesController::class);
+    Route::resource('/notifications', App\Http\Controllers\NotificationsController::class);
     Route::resource('/expenses', App\Http\Controllers\ExpensesController::class);
     Route::resource('/districts', App\Http\Controllers\DistrictController::class);
     Route::resource('/channels', App\Http\Controllers\ChannelController::class);

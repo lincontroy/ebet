@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>@yield('title', 'MIS') - {{ env('APP_NAME', 'Laravel') }}</title>
+  <title>@yield('title', 'ebet') - {{ env('APP_NAME', 'Laravel') }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -22,7 +22,7 @@
         <div>
             <img src="{{ asset('logo.png') }}" alt="PCEA Logo" style="max-width: 30%;">
         </div>
-      <a href="{{ url('/') }}" class="h1"><b>PCEA</b> M.I.S</a>
+      <a href="{{ url('/') }}" class="h1">Admin Panel</a>
     </div>
     @yield('content')
   </div>

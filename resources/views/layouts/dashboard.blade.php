@@ -26,7 +26,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <nav class="main-header navbar navbar-expand-md navbar-dark navbar-dark">
             <div class="container">
                 <a href="{{ url('/') }}" class="navbar-brand">
-                    <img src="{{ asset('pcea.png') }}" alt="PCEA Logo" class="brand-image elevation-3"
+                    <img src="{{ asset('logo.png') }}" alt="PCEA Logo" class="brand-image elevation-3"
                         style="opacity: .8">
                     <span class="brand-text font-weight-light"><b>{{ env('APP_NAME') }}</b></span>
                 </a>
@@ -44,27 +44,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <a href="{{ route('home') }}" class="nav-link">Dashboard</a>
                         </li>
                         <li class="nav-item">
-                          <a href="{{ route('districts.index') }}" class="nav-link">Districts</a>
+                          <a href="{{ route('leagues.index') }}" class="nav-link">Leagues</a>
                       </li>
                       <li class="nav-item">
-                            <a href="{{ url('/channels') }}" class="nav-link">Channels</a>
+                            <a href="{{ route('teams.index') }}" class="nav-link">Teams</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/members') }}" class="nav-link">Members</a>
+                            <a href="{{ route('matches.index') }}" class="nav-link">Matches</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ url('/transactions') }}" class="nav-link">Transactions</a>
+                            <a href="{{ route('notifications.index') }}" class="nav-link">Notifications</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link " href="{{ url('/expenses') }}" id="submenuDropdown" >
-                            Expenses
-                            </a>   
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " href="{{ url('/reports') }}" id="submenuDropdown" >
-                            Reports
-                            </a>   
-                        </li>
+                     
                         <li class="nav-item dropdown">
                             <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"
                                 aria-expanded="false" class="nav-link dropdown-toggle"><i
@@ -114,10 +105,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <footer class="main-footer">
             <!-- To the right -->
             <div class="float-right d-none d-sm-inline">
-                info@vutia.co.ke
+                info@coptic.co.ke
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; <?= date('Y') ?> <a href="https://ve.ke">Vutia Enterprises</a>.</strong> All rights reserved.
+            <strong>Copyright &copy; <?= date('Y') ?> <a href="https://coptic.co.ke">Coptic Technologies</a>.</strong> All rights reserved.
         </footer>
     </div>
     <!-- ./wrapper -->
