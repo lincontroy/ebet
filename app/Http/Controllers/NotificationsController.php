@@ -35,8 +35,15 @@ class NotificationsController extends Controller
     {
         
         $notifications=Notifications::create($request->all());
-        $this->sendPushNotification(env('fcm_token'), $request->subject, $request->body, $id = null);
+        // return $this->sendPushNotification(env('fcm_token'), $request->subject, $request->body, $id = null);
+        // return redirect(route('notifications.index'))->with('success', 'Notification created successfully');
+        $customData = ['custom_key' => 'custom_value'];
+        
+        $result = $this->sendNotificationToTopic("nots", $request->subject, $request->body, $customData);
+
+        // return $result;
         return redirect(route('notifications.index'))->with('success', 'Notification created successfully');
+    
     }
 
     /**
@@ -72,10 +79,11 @@ class NotificationsController extends Controller
     }
 
     public function sendPushNotification($fcm_token, $title, $message, $id = null) {  
-    
+
+      
         $url = "https://fcm.googleapis.com/fcm/send";            
         $header = [
-        'authorization: key=' .'wolfsoft1.primewave',
+        'authorization: key=' .env('fcm_token'),
             'content-type: application/json'
         ];    
 
@@ -83,13 +91,13 @@ class NotificationsController extends Controller
             "to" : "' . $fcm_token . '",
                 "notification" : {
                     "title":"' . $title . '",
-                    "text" : "' . $message . '"
+                    "body" : "' . $message . '"
                 },
             "data" : {
+                "to":"/topics/nots",
                 "id" : "'.$id.'",
                 "title":"' . $title . '",
-                "description" : "' . $message . '",
-                "text" : "' . $message . '",
+                "body" : "' . $message . '",
                 "is_read": 0
               }
         }';
@@ -107,5 +115,43 @@ class NotificationsController extends Controller
 
         return $result;
     }
+
+
+    function sendNotificationToTopic($topic, $title, $body, $customData = [])
+{
+    $serverKey = env('fcm_token');
+    $url = 'https://fcm.googleapis.com/fcm/send';
+
+    $data = [
+        'to' => '/topics/' . $topic,
+        'notification' => [
+            'title' => $title,
+            'body' => "$body",
+        ],
+        'data' => $customData,
+    ];
+
+    $options = [
+        'http' => [
+            'header' => [
+                'Content-Type: application/json',
+                'Authorization: key=' . $serverKey,
+            ],
+            'method' => 'POST',
+            'content' => json_encode($data),
+        ],
+    ];
+
+    $headers = [
+        'Content-Type: application/json',
+        'Authorization: key=' . $serverKey,
+    ];
+
+    $context = stream_context_create($options);
+    $result = file_get_contents('https://fcm.googleapis.com/fcm/send', false, $context);
+
+
+    return $result;
+}
 
 }
