@@ -118,40 +118,40 @@ class NotificationsController extends Controller
 
 
     function sendNotificationToTopic($topic, $title, $body, $customData = [])
-{
-    $serverKey = env('fcm_token');
-    $url = 'https://fcm.googleapis.com/fcm/send';
-
-    $data = [
-        'to' => '/topics/' . $topic,
-        'notification' => [
-            'title' => $title,
-            'body' => "$body",
-        ],
-        'data' => $customData,
-    ];
-
-    $options = [
-        'http' => [
-            'header' => [
-                'Content-Type: application/json',
-                'Authorization: key=' . $serverKey,
+    {
+        $serverKey = env('fcm_token');
+        $url = 'https://fcm.googleapis.com/fcm/send';
+    
+        $data = [
+            'to' => '/topics/' . $topic,
+            'notification' => [
+                'title' => $title,
+                'body' => $body,
             ],
-            'method' => 'POST',
-            'content' => json_encode($data),
-        ],
-    ];
-
-    $headers = [
-        'Content-Type: application/json',
-        'Authorization: key=' . $serverKey,
-    ];
-
-    $context = stream_context_create($options);
-    $result = file_get_contents('https://fcm.googleapis.com/fcm/send', false, $context);
-
-
-    return $result;
-}
+            'data' => $customData,
+        ];
+    
+        $headers = [
+            'Content-Type: application/json',
+            'Authorization: key=' . $serverKey,
+        ];
+    
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+        $result = curl_exec($ch);
+    
+        if (curl_errno($ch)) {
+            echo 'FCM request error: ' . curl_error($ch);
+        }
+    
+        curl_close($ch);
+    
+        return $result;
+    }
+    
 
 }
