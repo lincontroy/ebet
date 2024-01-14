@@ -119,7 +119,8 @@ class NotificationsController extends Controller
 
     function sendNotificationToTopic($topic, $title, $body, $customData = [])
     {
-        $serverKey = env('fcm_token');
+        // $serverKey = env('fcm_token');
+        $serverKey="AAAAvjRowhM:APA91bHr4-FNN5Wpf83YgR9vUMwbwRn20w3ipoBHGganqSTWj-i2W4TokT8oPE6XWX5g_qfVZ2yp4P3a_vFF5H3o0rTAngU19uhmUDwFgDGtuLkLIeiMFeMw3HdG-PHz6VazfwoK5fMq";
         $url = 'https://fcm.googleapis.com/fcm/send';
     
         $data = [
