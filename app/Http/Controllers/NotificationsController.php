@@ -41,8 +41,8 @@ class NotificationsController extends Controller
         
         $result = $this->sendNotificationToTopic("nots", $request->subject, $request->body, $customData);
 
-        // return $result;
-        return redirect(route('notifications.index'))->with('success', 'Notification created successfully');
+        return $result;
+        // return redirect(route('notifications.index'))->with('success', 'Notification created successfully');
     
     }
 
