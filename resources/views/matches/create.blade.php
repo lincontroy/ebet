@@ -29,6 +29,8 @@
                         <option value="st">Single tips</option>
                         <option value="dt">Daily 20+ odds</option>
                         <option value="bs">Bonus-surprise</option>
+                        <option value="cs">Correct score</option>
+                        <option value="htft">Half time Full time</option>
                    
                 </select>
             </div>

@@ -44,6 +44,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <a href="{{ route('home') }}" class="nav-link">Dashboard</a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('getusers') }}" class="nav-link">Create User</a>
+                        </li>
+                        <li class="nav-item">
                           <a href="{{ route('leagues.index') }}" class="nav-link">Leagues</a>
                       </li>
                       <li class="nav-item">

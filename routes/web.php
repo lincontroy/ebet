@@ -13,11 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return redirect(route("home"));
-});
-
-
+// Route::get('/', function () {
+//     // return redirect(route("home"));
+//     return view('welcome');
+    
+// });
+Route::get('match/{id}', [App\Http\Controllers\HomeController::class, 'match'])->name('match');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'homepage'])->name('home');
+Route::get('/verify', [App\Http\Controllers\HomeController::class, 'verifycode'])->name('verify');
+Route::post('/verifyPost', [App\Http\Controllers\HomeController::class, 'verifyPost'])->name('verifyPost');
 
 Auth::routes();
 
@@ -35,6 +39,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/transaction/post', [App\Http\Controllers\TransactionController::class,'savetransaction'])->name('savetransaction');
     Route::post('/expense/category', [App\Http\Controllers\ExpenseCategoryController::class,'store'])->name('store');
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/getusers', [App\Http\Controllers\HomeController::class, 'getusers'])->name('getusers');
+    Route::get('/createUser', [App\Http\Controllers\HomeController::class, 'createUser'])->name('createUser');
+    Route::post('/createUserPost', [App\Http\Controllers\HomeController::class, 'createUserPost'])->name('createUserPost');
     Route::get('/reports', [App\Http\Controllers\ReportsController::class, 'index'])->name('index');
     Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
     
