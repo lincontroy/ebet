@@ -130,21 +130,21 @@
                                 <div class="col">
                                     <div class="card h-100 duration-card" onclick="highlightDurationCard(this)">
                                         <div class="card-body">
+                                            <h5 class="card-title" style="color: black">1 Week</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card h-100 duration-card" onclick="highlightDurationCard(this)">
+                                        <div class="card-body">
+                                            <h5 class="card-title" style="color: black">1 Month</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="card h-100 duration-card" onclick="highlightDurationCard(this)">
+                                        <div class="card-body">
                                             <h5 class="card-title" style="color: black">3 Months</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="card h-100 duration-card" onclick="highlightDurationCard(this)">
-                                        <div class="card-body">
-                                            <h5 class="card-title" style="color: black">6 Months</h5>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="card h-100 duration-card" onclick="highlightDurationCard(this)">
-                                        <div class="card-body">
-                                            <h5 class="card-title" style="color: black">12 Months</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -177,89 +177,94 @@
                 <p>Payment Amount: <span id="paymentAmount" class="text-light"></span></p>
 
                 <h5>MPESA Payment Procedure</h5>
-                <p>Please follow the steps below to make your payment via MPESA:</p>
+                <div class="container mt-5">
+                    <form id="mpesaForm" >
+                        @csrf
+                        <div class="form-group">
+                            <label for="mobileNumber">Mobile Number:</label>
+                            <input type="tel" class="form-control" min="10" max="10" id="mobileNumber"
+                                placeholder="0798600470" required>
+                                <input type="hidden" value="" id="paymenta">
+                        </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
 
-                <ol>
-                    <li>Go to your MPESA menu on your phone.</li>
-                    <li>Select "Lipa na M-PESA."</li>
-                    <li>Select "Paybill."</li>
-                    <li>Enter Business Number: <strong>4123803</strong>.</li>
-                    <li>Enter Account Number: <strong>game</strong>.</li>
-                    <li>Enter Amount: <strong>Indicated above</strong>.</li>
-                    <li>Enter your MPESA PIN.</li>
-                    <li>Confirm the transaction details and press "OK" to complete the payment.</li>
-                    <li>You will receive a confirmation message from MPESA once the payment is successful.</li>
-                </ol>
+                    <p>If you encounter any issues or have questions, please contact customer support for assistance.
+                    </p>
 
-                <p>If you encounter any issues or have questions, please contact customer support for assistance.</p>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<script>
-    function highlightCard(card) {
-        // Remove highlight from all cards
-        let allCards = document.querySelectorAll('.card');
-        allCards.forEach(function (card) {
-            card.classList.remove('highlight-card');
-        });
+    <script>
+        function highlightCard(card) {
+            // Remove highlight from all cards
+            let allCards = document.querySelectorAll('.card');
+            allCards.forEach(function (card) {
+                card.classList.remove('highlight-card');
+            });
 
-        // Highlight the clicked card
-        card.classList.add('highlight-card');
-    }
-
-
-    function highlightDurationCard(durationCard) {
-        // Remove highlight from all Duration cards
-        let durationCards = document.querySelectorAll('.duration-card');
-        durationCards.forEach(function (card) {
-            card.classList.remove('highlight-card');
-        });
-
-        // Highlight the clicked Duration card
-        durationCard.classList.add('highlight-card');
-    }
-
-    function validateSelections() {
-        // Check if both match and duration selections are filled
-        let matchSelected = document.querySelector('.match-card.highlight-card');
-        let durationSelected = document.querySelector('.duration-card.highlight-card');
-
-        if (matchSelected && durationSelected) {
-
-            document.getElementById('selectedMatch').innerText = matchSelected.textContent.trim();
-            document.getElementById('selectedDuration').innerText = durationSelected.textContent.trim();
-
-            if (durationSelected.textContent.trim() == "3 Months") {
-                document.getElementById('paymentAmount').innerText = "3,500";
-            } else if (durationSelected.textContent.trim() == "6 Months") {
-                document.getElementById('paymentAmount').innerText = "6,000";
-            } else if (durationSelected.textContent.trim() == "12 Months") {
-                document.getElementById('paymentAmount').innerText = "9,000";
-            }
-
-            // Show the modal
-            var myModal = new bootstrap.Modal(document.getElementById('selectionModal'), {});
-            myModal.show();
-            // Both selections are filled, proceed with further action
-            //   alert("Match: " + matchSelected.textContent.trim() + ", Duration: " + durationSelected.textContent.trim());
-
-        } else {
-            // If any of the selections is not filled, show an alert
-            alert("Please select both a match and a duration.");
+            // Highlight the clicked card
+            card.classList.add('highlight-card');
         }
-    }
-
-    document.getElementById('proceed').addEventListener('click', validateSelections);
-
-</script>
 
 
+        function highlightDurationCard(durationCard) {
+            // Remove highlight from all Duration cards
+            let durationCards = document.querySelectorAll('.duration-card');
+            durationCards.forEach(function (card) {
+                card.classList.remove('highlight-card');
+            });
 
-@endsection
+            // Highlight the clicked Duration card
+            durationCard.classList.add('highlight-card');
+        }
+
+        function validateSelections() {
+            // Check if both match and duration selections are filled
+            let matchSelected = document.querySelector('.match-card.highlight-card');
+            let durationSelected = document.querySelector('.duration-card.highlight-card');
+
+            if (matchSelected && durationSelected) {
+
+                document.getElementById('selectedMatch').innerText = matchSelected.textContent.trim();
+                document.getElementById('selectedDuration').innerText = durationSelected.textContent.trim();
+
+                if (durationSelected.textContent.trim() == "1 Week") {
+                    document.getElementById('paymentAmount').innerText = "3,500";
+                    document.getElementById('paymenta').innerText = "3,500";
+                    
+                    
+                } else if (durationSelected.textContent.trim() == "1 Month") {
+                    document.getElementById('paymentAmount').innerText = "7,500";
+                    document.getElementById('paymenta').innerText = "7,500";
+                } else if (durationSelected.textContent.trim() == "3 Months") {
+                    document.getElementById('paymentAmount').innerText = "15,500";
+                    document.getElementById('paymenta').innerText = "15,500";
+                }
+
+                // Show the modal
+                var myModal = new bootstrap.Modal(document.getElementById('selectionModal'), {});
+                myModal.show();
+                // Both selections are filled, proceed with further action
+                //   alert("Match: " + matchSelected.textContent.trim() + ", Duration: " + durationSelected.textContent.trim());
+
+            } else {
+                // If any of the selections is not filled, show an alert
+                alert("Please select both a match and a duration.");
+            }
+        }
+
+        document.getElementById('proceed').addEventListener('click', validateSelections);
+
+    </script>
+
+
+
+    @endsection

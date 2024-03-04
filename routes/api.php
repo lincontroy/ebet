@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+Route::post('v1/stk', [App\Http\Controllers\ApiController::class, 'sendstk'])->name('sendstk');
+Route::post('v1/payments', [App\Http\Controllers\ApiController::class, 'payments'])->name('payments');
+Route::get('v1/registerurl', [App\Http\Controllers\ApiController::class, 'registerurl'])->name('registerurl');
 Route::post('matches', [App\Http\Controllers\MatchesController::class, 'getMatches'])->name('getMatches');
 
 Route::post('payments', [App\Http\Controllers\TransactionController::class, 'store'])->name('payments');

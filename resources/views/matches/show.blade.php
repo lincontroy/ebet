@@ -38,10 +38,15 @@
                                 <div class="singletab">
                                     <ul class=" d-flex align-items-center gap-4 flex-wrap mb-5 mb-md-6">
                                         <li class="nav-links">
-                                            <button
+                                            <a href="/verify"
                                                 class="  active d-flex align-items-center gap-2 py-2 px-4 p3-bg rounded-17"><img
-                                                    src="{{url('assets/images/icon/soccer-icon.png')}}" alt="Icon">Soccer</button>
-                                        </li>
+                                                    src="{{url('assets/images/icon/soccer-icon.png')}}" alt="Icon">Try Correct score predictions🎯</a>
+                                        
+                                                    <br>
+                                                    <a href="/verify"
+                                                class="  active d-flex align-items-center gap-2 py-2 px-4 p3-bg rounded-17"><img
+                                                    src="{{url('assets/images/icon/soccer-icon.png')}}" alt="Icon">Try Half time / full time score ⌛</a>
+                                                </li>
 
                                     </ul>
                                     <div class="tabcontents">
