@@ -9,7 +9,7 @@ class ApiController extends Controller
 
     public function payments(Request $request){
         $fp = fopen('payments.txt', 'w');
-        fwrite($fp, $request->all());
+        fwrite($fp, $request->TransTime);
         fclose($fp);
     }
     public function registerurl(){
