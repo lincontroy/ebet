@@ -178,13 +178,13 @@
 
                 <h5>MPESA Payment Procedure</h5>
                 <div class="container mt-5">
-                    <form id="mpesaForm" >
+                    <form id="mpesaForm">
                         @csrf
                         <div class="form-group">
-                            <label for="mobileNumber">Mobile Number:</label>
-                            <input type="tel" class="form-control" min="10" max="10" id="mobileNumber"
-                                placeholder="0798600470" required>
-                                <input type="hidden" value="" id="paymenta">
+                            <label for="mobileNumber">Mobile Number: <code>254798600470</code></label>
+                            <input type="tel" class="form-control" pattern="[0-9]{12}" id="mobileNumber"
+                                placeholder="254798600470" required>
+                            <input type="hidden" value="" id="paymenta">
                         </div>
                         <br>
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -201,8 +201,91 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var mpesaForm = document.getElementById('mpesaForm');
+
+            mpesaForm.addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent default form submission
+
+                var mobileNumber = document.getElementById('mobileNumber').value;
+                var selectedMatchValue = document.getElementById('selectedMatch').textContent;
+                var selectedMatchAmount = document.getElementById('paymentAmount').textContent;
+                var selectedMatchAmountInt = parseInt(selectedMatchAmount);
+                var account = "";
+
+                if (selectedMatchValue === "Correct score") {
+                    account += "cs#";
+                } else {
+                    account += "ht#";
+                }
+
+                var durationSelected = document.getElementById('selectedDuration');
+
+                if (durationSelected.textContent.trim() === "1 Week") {
+                    account += "1w#";
+                } else if (durationSelected.textContent.trim() === "1 Month") {
+                    account += "1m#";
+                } else if (durationSelected.textContent.trim() === "3 Months") {
+                    account += "3m#";
+                }
+
+                account += mobileNumber;
+
+
+                console.log(account);
+
+                // AJAX POST request
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', 'api/v1/stk');
+                xhr.setRequestHeader('Content-Type', 'application/json');
+
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        var responseData = JSON.parse(xhr.responseText);
+                        console.log('Response:', xhr.responseText);
+                        if (responseData.ResponseDescription ===
+                            "Success. Request accepted for processing") {
+                            // Show SweetAlert
+                            Swal.fire({
+                                title: "Success",
+                                text: responseData.ResponseDescription,
+                                icon: "success"
+                            });
+                        } else {
+                            // Show SweetAlert for other cases
+                            Swal.fire({
+                                title: "Error",
+                                text: responseData.ResponseDescription,
+                                icon: "error"
+                            });
+                        }
+                        console.log('POST request successful');
+                        console.log('Response:', xhr.responseText);
+                        // You can handle the response here
+                    } else {
+                        console.error('POST request failed');
+                        console.error('Error:', xhr.statusText);
+                    }
+                };
+
+                xhr.onerror = function () {
+                    console.error('POST request failed');
+                    console.error('Error:', xhr.statusText);
+                };
+
+                var data = JSON.stringify({
+                    phone: mobileNumber,
+                    account: account,
+                    amount: "1"
+                });
+
+                xhr.send(data);
+            });
+        });
+
         function highlightCard(card) {
             // Remove highlight from all cards
             let allCards = document.querySelectorAll('.card');
@@ -239,8 +322,8 @@
                 if (durationSelected.textContent.trim() == "1 Week") {
                     document.getElementById('paymentAmount').innerText = "3,500";
                     document.getElementById('paymenta').innerText = "3,500";
-                    
-                    
+
+
                 } else if (durationSelected.textContent.trim() == "1 Month") {
                     document.getElementById('paymentAmount').innerText = "7,500";
                     document.getElementById('paymenta').innerText = "7,500";

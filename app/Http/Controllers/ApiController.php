@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 class ApiController extends Controller
 {
 
+    public function payments(Request $request){
+        $fp = fopen('payments.txt', 'w');
+        fwrite($fp, $request->all());
+        fclose($fp);
+    }
     public function registerurl(){
         $consumer_key='hPenbb0kTzvAkVF6Oad2EHJQ0o2AzaLdAo5w5dAilAoW8Swy';
         $consumer_secret='JlkraxnOqhyGIJGsa8CmAWzjjDGKQEVgBWTCqM5gDhArJUd1ck0j6wlze7I4ibyY';
@@ -50,6 +55,7 @@ class ApiController extends Controller
 
         $mobile=$request->phone;
         $amount=$request->amount;
+        $account=$request->account;
         
         $consumerKey = "hPenbb0kTzvAkVF6Oad2EHJQ0o2AzaLdAo5w5dAilAoW8Swy"; //Fill with your app Consumer Key
           $consumerSecret = "JlkraxnOqhyGIJGsa8CmAWzjjDGKQEVgBWTCqM5gDhArJUd1ck0j6wlze7I4ibyY"; // Fill with your app Secret
@@ -62,8 +68,8 @@ class ApiController extends Controller
           
           
           $PartyA = $mobile; // This is your phone number, 
-          $AccountReference = $mobile;
-          $TransactionDesc = $mobile;
+          $AccountReference = $account;
+          $TransactionDesc = $account;
           $Amount = $amount;
          
           # Get the timestamp, format YYYYmmddhms -> 20181004151020
@@ -80,7 +86,7 @@ class ApiController extends Controller
           $initiate_url = 'https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
         
           # callback url
-          $CallBackURL = "https://lifegeegs.com/pay/confirmation_url.php";  
+          $CallBackURL = "https://secretgardentips.com/api/v1/payments";  
         
           $curl = curl_init($access_token_url);
           curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
@@ -110,7 +116,7 @@ class ApiController extends Controller
             'Amount' => $Amount,
             'PartyA' => $PartyA,
             'PartyB' => $BusinessShortCode,
-            'InvoiceNumber'=>'https://lifegeegs.com/status',
+            'InvoiceNumber'=>'https://secretgardentips.com/api/v1/payments',
             'PhoneNumber' => $PartyA,
             'CallBackURL' => $CallBackURL,
             'AccountReference' => $AccountReference,
