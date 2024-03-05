@@ -3,14 +3,135 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\userCodes;
 
 class ApiController extends Controller
 {
 
     public function payments(Request $request){
-        $fp = fopen('payments.txt', 'w');
-        fwrite($fp, $request->BillRefNumber);
-        fclose($fp);
+        // $fp = fopen('payments.txt', 'w');
+        // fwrite($fp, $request->BillRefNumber);
+        // fclose($fp);
+        $TransactionType=$request->TransactionType;
+        $TransID=$request->TransID;
+        $BillRefNumber=$request->BillRefNumber;
+        $TransAmount=$request->TransAmount;
+        $FirstName=$request->FirstName;
+
+        $parts = explode('#', $BillRefNumber);
+
+        // $parts now contains an array of individual components
+        $game = $parts[0]; // "ht"
+        $time= $parts[1]; // "1w"
+        $phone = $parts[2]; // "254704800563"
+        $duration=null;
+
+        if($time=="1w" && $TransAmount=="3500"){
+            $duration="0.25";
+        }else if($time=="1m" && $TransAmount=="7500"){
+            $duration="1";
+        }else if($time=="3m" && $TransAmount=="15500"){
+            $duration="3";
+        }else{
+            $duration=null;
+        }
+
+        $code=$this->generateRandomCode();
+
+        if($game=="ht"){
+            $game="htft";
+            $message="Hello $FirstName,\nYour code to see Half time full time games is $code which is subject to expires\nUse https://secretgardentips.com/verify and click verify code to access the games";
+        }else{
+            $message="Hello $FirstName,\nYour code to see Correct score games is $code which is subject to expires\nUse https://secretgardentips.com/verify and click verify code to access the games";
+       
+        }
+
+       
+
+        $userCodes=new userCodes();
+        $userCodes->phone=$phone;
+        $userCodes->duration=$duration;
+        $userCodes->code=$code;
+        $userCodes->game=$game;
+
+        
+
+
+                try{
+                    if($userCodes->save()){
+                        
+                        $modifiedNumber = substr($phone, 3);
+                        sendSmsUsingCurl($modifiedNumber,'20642','plain',$message);
+                        // return redirect(route('getusers'))->with('success', 'User created successfully');
+                    }
+                }catch(Exception $e){
+                    return redirect(route('matches.index'))->with('success', $e->getMessage());
+                }
+
+        
+        
+
+
+
+    }
+
+    public function sendSmsUsingCurl($recipient, $senderId, $messageType, $message){
+        $url = 'https://sms.coptic.co.ke/api/v3/sms/send';
+    
+        $headers = [
+            'Authorization: Bearer 8|xOJrpxUxElUvaWhsQ6cA54AZ6fxdLh2moxyYZLUu9db2c618',
+            'Accept: application/json',
+            'Content-Type: application/json',
+        ];
+    
+        $data = [
+            'recipient' => $recipient,
+            'sender_id' => $senderId,
+            'type' => $messageType,
+            'message' => $message,
+        ];
+    
+        $ch = curl_init();
+    
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+        try {
+            $response = curl_exec($ch);
+            $statusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    
+            if ($statusCode >= 200 && $statusCode < 300) {
+                // Request was successful
+                $responseData = json_decode($response, true);
+    
+                // Add your logic here based on the response
+    
+                return ['success' => true, 'message' => $responseData];
+            } else {
+                // Request failed
+                return ['success' => false, 'message' => 'Request failed with status code: ' . $statusCode];
+            }
+        } catch (\Exception $e) {
+            // Handle any exceptions that occur during the cURL request
+            return ['success' => false, 'message' => $e->getMessage()];
+        } finally {
+            curl_close($ch);
+        }
+    }
+
+    public function generateRandomCode() {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $code = '';
+
+        // Generate a random 10-character code
+        for ($i = 0; $i < 10; $i++) {
+            $code .= $characters[mt_rand(0, strlen($characters) - 1)];
+        }
+
+        return $code;
     }
     public function registerurl(){
         $consumer_key='hPenbb0kTzvAkVF6Oad2EHJQ0o2AzaLdAo5w5dAilAoW8Swy';
