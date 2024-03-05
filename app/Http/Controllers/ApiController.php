@@ -88,9 +88,9 @@ class ApiController extends Controller
 
         if($game=="ht"){
             $game="htft";
-            $message="Hello $FirstName,\nYour code to see Half time full time games is $code which is subject to expires\nUse https://secretgardentips.com/verify and click verify code to access the games";
+            $message="Hello $FirstName,\nYour code to see Half time full time games is $code which is subject to expiry\nUse https://secretgardentips.com/verify and click verify code to access the games";
         }else{
-            $message="Hello $FirstName,\nYour code to see Correct score games is $code which is subject to expires\nUse https://secretgardentips.com/verify and click verify code to access the games";
+            $message="Hello $FirstName,\nYour code to see Correct score games is $code which is subject to expiry\nUse https://secretgardentips.com/verify and click verify code to access the games";
        
         }
 
@@ -106,7 +106,7 @@ class ApiController extends Controller
 
 
                 try{
-                    if($userCodes->save()){
+                    if($userCodes->save() && $duration !=null){
                         
                         $modifiedNumber = substr($phone, 3);
                         $this->sendSmsUsingCurl($modifiedNumber,'20642','plain',$message);

@@ -213,7 +213,9 @@
                 var mobileNumber = document.getElementById('mobileNumber').value;
                 var selectedMatchValue = document.getElementById('selectedMatch').textContent;
                 var selectedMatchAmount = document.getElementById('paymentAmount').textContent;
-                var selectedMatchAmountInt = parseInt(selectedMatchAmount);
+                var stringWithoutComma = selectedMatchAmount.replace(/,/g, ''); // Remove all commas
+                var selectedMatchAmountInt = parseInt(stringWithoutComma);
+                // var selectedMatchAmountInt = parseInt(selectedMatchAmount);
                 var account = "";
 
                 if (selectedMatchValue === "Correct score") {
