@@ -279,7 +279,7 @@
                 var data = JSON.stringify({
                     phone: mobileNumber,
                     account: account,
-                    amount: "1"
+                    amount: selectedMatchAmountInt
                 });
 
                 xhr.send(data);
